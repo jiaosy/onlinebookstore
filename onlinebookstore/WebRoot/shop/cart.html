@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>我的购物车</title>
+</head>
+<body>
+
+ 
+<h3 align="center">${session.userinfo.name}的购物车</h3>
+<#if !session.carts??><h3 align="center">购物车里好冷清，点击<a href="/onlinebookstore/book">返回主页</a>开始购买之旅</h3>
+<#else>
+<table border="1" cellpadding="10" cellspacing="0" align="center" width="800px">
+<tr><th>序号</th>
+	<th>编号</th>
+	<th>书名</th>
+	<th>定价</th>
+	<th>数量</th>
+</tr>
+
+<#-- 取map对象的方法 只有默认值为string时 才可以使用<#list session.carts？keys as gs>进行遍历 -->
+<#assign sum_num = 0>
+<#assign sum_price = 0>
+<#list session.carts.keySet() as gs>
+<tr align="center">
+	<td>${gs_index +1}</td>
+	<td>${gs.sid!}</td>
+	<td>${gs.sname!}</td>
+	<td>${gs.sprice!}</td>
+	<td><input type="button" value="-" onclick="window.open('/onlinebookstore/shop/sub/${gs.sid}')"/> 
+	&nbsp;&nbsp;&nbsp;${session.carts.get(gs)}&nbsp;&nbsp;&nbsp; 
+	<input type="button" value="+" onclick="window.open('/onlinebookstore/shop/add/${gs.sid}-1')" /></td>
+	<#assign sum_num=sum_num+session.carts.get(gs)>
+	<#assign sum_price=sum_price+session.carts.get(gs)*(gs.sprice?number)>
+</tr>
+</#list>
+</table>
+<p style="float: right;margin-right:200px;">总数量${sum_num} 总价格${sum_price}</p>
+<hr><br/>
+<a href="/onlinebookstore/shop/buy" style="float: right;">去支付</a>
+</#if>
+</body>
+</html>

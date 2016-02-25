@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>书城首页</title>
+</head>
+<body> 
+<#-- 取session数据的方法 1.${session["userinfo"]} 2.${session.userinfo} -->
+<#-- 用户登录判断 -->
+<#if session.userinfo??>
+ 	<a href="/onlinebookstore/userinfo/detail">${session.userinfo.name}</a>, 欢迎您！
+	<a href="/onlinebookstore/shop">查看购物车</a>
+	<a href="/onlinebookstore/userinfo/logout" style="float: right;">注销</a>
+<#else>
+	<a href="/onlinebookstore/userinfo/login" style="float: right;">|登录</a><a href="/onlinebookstore/userinfo/register" style="float: right;">注册|</a>
+</#if>
+<br><hr>
+<a href="/onlinebookstore/book/managebook"> 管理书籍 </a>
+<#-- 书籍展示列表 -->
+<table  align="center" cellpadding="15">
+	<#list books as book>
+	<#if book_index==0||book_index%5==0><tr></#if>
+	<td>
+		<img alt="" src="../upload/upload/12.png"><br/>
+		书名：${book.sname}<br/>
+		定价：${book.sprice}<br/>
+		编号：${book.sid}<br/>
+ 		<#if book.num == 0>缺货中<br/>
+		<input type="button" onclick="alert('通知成功')" value="提醒商家补货">
+		<#else>余量：${book.num}<br/><a href="/onlinebookstore/shop/add/${book.sid}-0">点击购买</a>
+		</#if>
+		<br/> 
+	 </td>
+	 <#if book_index==4||book_index%5==4></tr></#if>
+ 	</#list>
+</table>
+时间： ${.now?date}
+</body>
+</html>

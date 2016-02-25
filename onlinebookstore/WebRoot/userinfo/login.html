@@ -1,0 +1,56 @@
+<!DOCTYPE html >
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="../js/jquery-2.1.4.js" ></script>
+<title>登陆界面</title>
+</head>
+<body>
+登陆界面<hr>
+
+<form action="/onlinebookstore/userinfo/check" method="post">
+用户名：<input type="text" name="userinfo.name"/>${msg!""}
+<br>
+<br>
+验证码：<input type="text" name="captcha1" id="captchaInput" size="13">
+<img id="captchaIMG" src="captcha" width="45" height="25"/>
+<!-- button 和input button  区别： button在某些浏览器中会自动提交表单-->
+<input type="button" value="刷新" id="butt"> <label id="validateResult"></label>
+<br>
+<input type="button" value="登录" id="submit"/>
+</form>
+<script type="text/javascript">
+$(document).ready(function(){
+	<#-- 刷新验证码 
+		get方法只请求数据 不用发送数据 
+		post方法可以发送数据到服务器 
+	-->
+	$('#butt').click(function(){
+		$.get("captcha",function(data,status){
+			$('#captchaIMG').attr('src',"captcha");
+		});
+	});
+	<#-- 验证码校验 -->
+	$('#captchaInput').keyup(function(){
+		$.post("captchaValidate",$(this),function(data){
+			if(data.trim()=="1"){
+				$('#validateResult').text("");
+			}else{
+				$('#validateResult').text("验证码错误");
+			}
+		});
+	});
+	$('#submit').click(function(){
+		if($('#validateResult').text()=="验证码错误"){
+		}else{
+			<#--  js页面跳转的3种方式
+			 window.navigate("top.jsp");
+			 window.location.replace("http://www.baidu.com");
+			-->
+			window.location.href="/onlinebookstore/userinfo/check"; 
+		}
+	});
+});
+</script>
+</body>
+</html>

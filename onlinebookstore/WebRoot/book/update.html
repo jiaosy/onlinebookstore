@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>书籍详细信息</title>
+</head>
+<body>
+<form action="/onlinebookstore/book/save/update" enctype="multipart/form-data" method="post">
+书名<input type="text" name="sname" value="${book.sname}"><br/>
+定价<input type="text" name="sprice" value="${book.sprice}" ><br/>
+编号<input type="text" name="sid" value="${book.sid!}"><br/>
+库存<input type="text" name="num" value="${book.num!}"><br/>
+图片
+<img alt="" src="../upload/upload/121.png"/>		
+<input type="file" name="file" size = "5" maxlength = "20"></br>
+<input type="submit" value="修改">
+</form>
+</body>
+</html>

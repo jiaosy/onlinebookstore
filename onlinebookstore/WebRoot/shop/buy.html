@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>确认订单</title>
+</head>
+<body>
+<h3 align="center">确认订单信息</h3>
+<form action="/onlinebookstore/shop/order">
+<p style="margin-left: 300px">
+姓        名： <input type="text" name="orders.Customer" value="${session.userinfo.name}" ><br/>
+发货地址：<input type="text" name="orders.ShipAddr" value="${session.userinfo.addr}" ><br/>
+联系方式：<input type="text" name="orders.telephe" value="${session.userinfo.telephe}"><br/>
+</p>
+<table border="1" cellpadding="10" cellspacing="0" align="center" width="800px">
+<tr>
+	<th>编号</th>
+	<th>书名</th>
+	<th>定价</th>
+	<th>数量</th>
+	<th>小计</th>
+</tr>
+<#assign sum_num = 0>
+<#assign sum_price = 0>
+<#list session.carts.keySet() as gs>
+<tr align="center">
+	<td>${gs.sid!}</td>
+	<td>${gs.sname!}</td>
+	<td>${gs.sprice!}</td>
+	<td>${session.carts.get(gs)}</td>
+	<td>${session.carts.get(gs)*(gs.sprice?number)}</td>
+	<#assign sum_num=sum_num+session.carts.get(gs)>
+	<#assign sum_price=sum_price+session.carts.get(gs)*(gs.sprice?number)>
+</tr>
+</#list>
+</table>
+<p style="float: right;margin-right:200px;">总数量${sum_num} 总价格${sum_price}</p>
+<hr><br/>
+<input type="submit" value="确认支付" style="float: right;">
+</form>
+</body>
+</html>

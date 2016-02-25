@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<a href="/onlinebookstore/book/add">添加书籍 </a>
+
+<table align="center" cellpadding="5">
+<tr>
+	<th style="padding-right: 20px;">书名</th>
+	<th style="padding-right: 20px;">定价</th>
+	<th style="padding-right: 20px;">编号</th>	
+	<th style="padding-right: 20px;">库存量</th>
+</tr>
+<#list books as  book>
+ 	<tr>
+ 	<td><a href="/onlinebookstore/book/update/${book.sid}">${book.sname}</a></td>
+ 	<td>${book.sprice}</td>
+ 	<td>${book.sid}</td> 
+ 	<td>${book.num}</td>
+ 	<td><a href="/onlinebookstore/book/delete/${book.sid}">下架</a></td>
+ 	</tr>
+</#list>
+</table>
+<a href="/onlinebookstore/book">商城主页</a>
+</body>
+</html>
